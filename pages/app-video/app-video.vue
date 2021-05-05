@@ -1,5 +1,5 @@
 <template>
-	<view class="video">
+	<view class="app-video">
 		<div class="usercolumn-two gdgn ">
 			<div class="conttitle">免费视频</div>
 			<ul class="mine-grid-ul">
@@ -41,13 +41,6 @@
 				</li>
 			</ul>
 			
-			<div class="conttitle">更多功能</div>
-			<ul class="mine-grid-ul">
-				<li @click="toSettingsDetail">
-					<image src="../../static/member/wdgn_11.png" class="imgicon"></image>
-					<p>设置</p>
-				</li>
-			</ul>
 		</div>
 	</view>
 </template>
@@ -56,71 +49,49 @@
 	export default {
 		data() {
 			return {
+				pagesURL:"/pages/app-webview/app-webview?url=",
 			}
 		},
 		methods: {
 			toFreeVideo1(){
 				uni.navigateTo({
-					url: '/pages/history/history?url=http://www.yhdm.so/'
+					url: this.pagesURL + 'http://www.yhdm.so/'
 				})
 			},
 			toFreeVideo2(){
 				uni.navigateTo({
-					url: '/pages/history/history?url=https://5ji.tv/'
+					url: this.pagesURL + 'https://5ji.tv/'
 				})
 			},
 			toFreeVideo3(){
 				uni.navigateTo({
-					url: '/pages/history/history?url=https://dsys.cc/'
+					url: this.pagesURL + 'https://dsys.cc/'
 				})
 			},
 			toFreeVideo4(){
 				uni.navigateTo({
-					url: '/pages/history/history?url=https://www.eggvod.cn/jxjx.php'
+					url: this.pagesURL + 'https://www.eggvod.cn/jxjx.php'
 				})
 			},
 			toWebView1(){
 				uni.navigateTo({
-					url: '/pages/history/history?url=https://v.qq.com/'
+					url: this.pagesURL + 'https://v.qq.com/'
 				})
 			},
 			toWebView2(){
 				uni.navigateTo({
-					url: '/pages/history/history?url=https://www.iqiyi.com/'
+					url: this.pagesURL + 'https://www.iqiyi.com/'
 				})
 			},
 			toWebView3(){
 				uni.navigateTo({
-					url: '/pages/history/history?url=https://www.youku.com/'
+					url: this.pagesURL + 'https://www.youku.com/'
 				})
 			},
 			toWebView4(){
 				uni.navigateTo({
-					url: '/pages/history/history?url=https://www.bilibili.com/'
+					url: this.pagesURL + 'https://www.bilibili.com/'
 				})
-			},
-			toSettingsDetail(){
-				uni.navigateTo({
-					url: '/pages/settings-detail/settings-detail'
-				})
-			}
-		},
-		onLoad() {
-			const isLogin = uni.getStorageSync('isLogin');
-			console.log(isLogin);
-			if(isLogin){
-				console.log('已登录');
-				// uni.navigateTo({
-				// 	url: '/pages/video/video'
-				// })
-				// uni.redirectTo({
-				// 	url:'/pages/video/video'
-				// })
-			}else{
-				console.log('未登录');
-				uni.redirectTo({
-					url: "/pages/login/login",
-				});
 			}
 		}
 	}

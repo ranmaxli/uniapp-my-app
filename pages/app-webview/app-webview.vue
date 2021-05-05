@@ -1,6 +1,11 @@
 <template>
-    <view class="history">
-		<web-view :src="url"></web-view>
+    <view class="app-webview">
+		<div>
+			<p>{{QRContent}}</p>
+		</div>
+		<div>
+			<web-view :src="webContent"></web-view>
+		</div>
 	</view>
 </template>
 
@@ -8,14 +13,21 @@
     export default {
 		data() {
 				return {
-					url: '',
+					QRContent: '',
+					webContent: '',
 					currentWebview:'',
 				}
 			},
 			methods: {
 			},
 			onLoad (options) {
-				this.url = options.url;
+				if(options.QRCode.indexOf('http') == -1){
+					this.QRContent = options.QRCode;
+					console.log(this.QRContent);
+				}else{
+					this.webContent = options.QRCode;
+					console.log(this.webContent);
+				}
 				
 				// #ifdef APP-PLUS
 				this.currentWebview = this.$mp.page.$getAppWebview()

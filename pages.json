@@ -1,32 +1,75 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/video/video",
+		    "path" : "pages/app-index/app-index",
 		    "style" :                                                                                    
 		    {
-		        "navigationBarTitleText": "视频"
+		        "navigationBarTitleText": "免责声明",
+		        "enablePullDownRefresh": false
 		    }
-		    
-		},{
+		},
+		{
 		    "path" : "pages/login/login",
 		    "style" : {
 				"navigationBarTitleText": "登录"
 			}
 		},
 		{
+		    "path" : "pages/app-video/app-video",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "视频"
+		    }
+		    
+		},
+		{
+		    "path" : "pages/app-webview/app-webview",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "\ue606",
+							"fontSrc": "/static/font/iconfont.ttf",
+							"fontSize": "22px"
+						}]
+					}
+				}
+		    }
+		},
+		{
+            "path" : "pages/app-my/app-my",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的",
+                "enablePullDownRefresh": false
+            }
+        },
+		{
+            "path" : "pages/app-camera/app-camera",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "相机",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+	
+		//	老页面
+		,{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
 				"enablePullDownRefresh": true
 			}
-		},
-		{
+		},{
 			"path" : "pages/goods-detail/goods-detail",
 			"style" : {
 				"navigationBarTitleText": "商品详情"
 			}
-		},
-		{
+		},{
 			"path" : "pages/news/news",
 			"style" : {
 				"navigationBarTitleText": "消息"
@@ -37,86 +80,59 @@
 			"style" : {
 				"navigationBarTitleText": "消息详情"
 			}
-		},
-		{
+		},{
             "path" : "pages/search/search",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "搜索"
             }
             
-        },
-		{
+        },{
 			"path" : "pages/member/member",
 			"style" : {
 				"navigationBarTitleText": "我的"
 			}
-		},
-		{
+		},{
             "path" : "pages/register/register",
             "style" : {
 				"navigationBarTitleText": "注册"
 			}
-        },
-		{
+        },{
             "path" : "pages/forget-pwd/forget-pwd",
             "style" : {
 				"navigationBarTitleText": "找回密码"
 			}
-        },
-		{
+        },{
             "path" : "pages/settings-detail/settings-detail",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "系统设置"
             }
             
-        },
-		{
+        },{
             "path" : "pages/about-us/about-us",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "关于我们"
-            }
-            
-        },
-		{
+            }  
+        },{
             "path" : "pages/platform-agreement/platform-agreement",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "平台协议"
             }
             
-        }
-        ,{
+        },{
             "path" : "pages/other/other",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "更多功能"
             }
-            
-        } 
-        ,{
-            "path" : "pages/history/history",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false,
-				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"text": "\ue606",
-							"fontSrc": "/static/font/iconfont.ttf",
-							"fontSize": "22px"
-						}]
-					}
-				}
-            }
-        }
+        }  
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "三农宝商城",
+		"navigationBarTitleText": "android or ios app",
 		"navigationBarBackgroundColor": "#279255",
 		"backgroundTextStyle": "light"
 	},
@@ -142,17 +158,23 @@
 			// 	"iconPath":"static/icon/search.png",
 			// 	"selectedIconPath":"static/icon/search-active.png"
 			// },
-			// {
-			// 	"text":"我的",
-			// 	"pagePath":"pages/member/member",
-			// 	"iconPath":"static/icon/member.png",
-			// 	"selectedIconPath":"static/icon/member-active.png"
-			// },
+			{
+				"text":"首页",
+				"pagePath":"pages/app-index/app-index",
+				"iconPath":"static/icon/home.png",
+				"selectedIconPath":"static/icon/home-active.png"
+			},
 			{
 				"text":"视频",
-				"pagePath":"pages/video/video",
+				"pagePath":"pages/app-video/app-video",
 				"iconPath":"static/icon/video-play.png",
 				"selectedIconPath":"static/icon/video-play-active.png"
+			},
+			{
+				"text":"我的",
+				"pagePath":"pages/app-my/app-my",
+				"iconPath":"static/icon/member.png",
+				"selectedIconPath":"static/icon/member-active.png"
 			}
 		]
 	}

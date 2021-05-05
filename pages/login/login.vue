@@ -40,10 +40,6 @@
         </view>
         <button class="button" @click="submit">登录</button><br/>
 		
-		<!-- <view class="button" @click="toOtherPage" hover-class="none" style="text-align: center;">摄像头</view><br/> -->
-		
-		<!-- <view class="button" @click="scan" style="text-align: center;">扫码验证</view><br/> -->
-		
 		<view class="input-label"
 		style="text-align: center;
 		left: 0;
@@ -92,27 +88,7 @@
 					});
 				}
 				uni.reLaunch({
-					url:'/pages/video/video'
-				})
-			},
-			scan() {
-			    var _this = this;
-			    uni.scanCode({
-			　　　　　onlyFromCamera: true, //为true只允许相机扫码，不加允许相册扫码
-			        success: function(res) {
-						console.log('扫码成功',res.result)
-			            uni.showToast({
-			                title: '扫码成功'
-			            })
-			        },
-			        fail: function(err) {
-			            console.log('扫码失败', err)
-			        }
-			    })
-			},
-			toOtherPage(){
-				uni.navigateTo({
-					url: '/pages/other/other'
+					url:'/pages/app-index/app-index'
 				})
 			}
 		}
