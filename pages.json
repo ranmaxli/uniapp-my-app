@@ -1,0 +1,159 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+		    "path" : "pages/video/video",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "视频"
+		    }
+		    
+		},{
+		    "path" : "pages/login/login",
+		    "style" : {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path" : "pages/goods-detail/goods-detail",
+			"style" : {
+				"navigationBarTitleText": "商品详情"
+			}
+		},
+		{
+			"path" : "pages/news/news",
+			"style" : {
+				"navigationBarTitleText": "消息"
+			}
+		},
+		{
+			"path" : "pages/news-detail/news-detail",
+			"style" : {
+				"navigationBarTitleText": "消息详情"
+			}
+		},
+		{
+            "path" : "pages/search/search",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "搜索"
+            }
+            
+        },
+		{
+			"path" : "pages/member/member",
+			"style" : {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+            "path" : "pages/register/register",
+            "style" : {
+				"navigationBarTitleText": "注册"
+			}
+        },
+		{
+            "path" : "pages/forget-pwd/forget-pwd",
+            "style" : {
+				"navigationBarTitleText": "找回密码"
+			}
+        },
+		{
+            "path" : "pages/settings-detail/settings-detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "系统设置"
+            }
+            
+        },
+		{
+            "path" : "pages/about-us/about-us",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "关于我们"
+            }
+            
+        },
+		{
+            "path" : "pages/platform-agreement/platform-agreement",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "平台协议"
+            }
+            
+        }
+        ,{
+            "path" : "pages/other/other",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "更多功能"
+            }
+            
+        } 
+        ,{
+            "path" : "pages/history/history",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "\ue606",
+							"fontSrc": "/static/font/iconfont.ttf",
+							"fontSize": "22px"
+						}]
+					}
+				}
+            }
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "三农宝商城",
+		"navigationBarBackgroundColor": "#279255",
+		"backgroundTextStyle": "light"
+	},
+	"tabBar": {
+		"selectedColor":"#279255",
+		"color":"#666666",
+		"list": [
+			// {
+			// 	"text":"首页",
+			// 	"pagePath":"pages/index/index",
+			// 	"iconPath":"static/icon/home.png",
+			// 	"selectedIconPath":"static/icon/home-active.png"
+			// },
+			// {
+			// 	"text":"消息",
+			// 	"pagePath":"pages/news/news",
+			// 	"iconPath":"static/icon/news.png",
+			// 	"selectedIconPath":"static/icon/news-active.png"
+			// },
+			// {
+			// 	"text":"搜索",
+			// 	"pagePath":"pages/search/search",
+			// 	"iconPath":"static/icon/search.png",
+			// 	"selectedIconPath":"static/icon/search-active.png"
+			// },
+			// {
+			// 	"text":"我的",
+			// 	"pagePath":"pages/member/member",
+			// 	"iconPath":"static/icon/member.png",
+			// 	"selectedIconPath":"static/icon/member-active.png"
+			// },
+			{
+				"text":"视频",
+				"pagePath":"pages/video/video",
+				"iconPath":"static/icon/video-play.png",
+				"selectedIconPath":"static/icon/video-play-active.png"
+			}
+		]
+	}
+}
