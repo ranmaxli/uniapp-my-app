@@ -49,7 +49,7 @@
 					key: 'tip_version_update_time',
 					data: currTimeStamp,
 					success: function () {
-						console.log('setStorage-success');
+						// console.log('setStorage-success');
 					}
 				});
 			},
@@ -59,8 +59,8 @@
 			 * @param {Object} curr_version 当前应用版本号
 			 */
 			checkVersionToLoadUpdate:function(server_version,curr_version){
-				console.log(server_version)
-				console.log(curr_version)
+				console.log("服务器版本号：" + server_version)
+				console.log("本机版本号：" + curr_version)
 				if(server_version > curr_version){
 					//TODO 此处判断是否为 WIFI连接状态
 					if(plus.networkinfo.getCurrentType()!=3){
@@ -119,7 +119,7 @@
 			switch (uni.getSystemInfoSync().platform) {
 				case 'android':
 					_this.AndroidCheckUpdate(); 
-					console.log('运行Android上') 
+					// console.log('运行Android上') 
 					plus.navigator.closeSplashscreen();
 					// plus.screen.lockOrientation('landscape-primary'); //锁定
 					break;

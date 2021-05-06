@@ -3,7 +3,7 @@
 		<div>
 			<p>{{QRContent}}</p>
 		</div>
-		<div>
+		<div v-if="webContent">
 			<web-view :src="webContent"></web-view>
 		</div>
 	</view>
@@ -21,12 +21,12 @@
 			methods: {
 			},
 			onLoad (options) {
-				if(options.QRCode.indexOf('http') == -1){
+				if(options.url != null){
+					this.webContent = options.url;
+				}else if(options.QRCode.indexOf('http') == -1){
 					this.QRContent = options.QRCode;
-					console.log(this.QRContent);
 				}else{
 					this.webContent = options.QRCode;
-					console.log(this.webContent);
 				}
 				
 				// #ifdef APP-PLUS
