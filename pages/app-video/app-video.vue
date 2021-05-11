@@ -70,7 +70,7 @@
 			},
 			toFreeVideo4(){
 				uni.navigateTo({
-					url: this.pagesURL + 'https://www.eggvod.cn/jxjx.php'
+					url: this.pagesURL + 'https://www.eggvod.cn/jxjx.php?lrspm=271688611&zhm_jx='
 				})
 			},
 			toWebView1(){
