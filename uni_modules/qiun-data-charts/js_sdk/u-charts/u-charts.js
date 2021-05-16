@@ -5768,7 +5768,7 @@ var uCharts = function uCharts(opts) {
     calibration:false,
     gridType: 'solid',
     dashLength: 4,
-    scrollAlign: 'left',
+    scrollAlign: 'right',
     boundaryGap: 'center',
     axisLine: true,
     axisLineColor: '#cccccc'
