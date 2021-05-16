@@ -54,7 +54,13 @@
                 "navigationBarTitleText": "相机",
                 "enablePullDownRefresh": false
             }
-            
+        },{
+            "path" : "pages/app-health/app-health",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "健康",
+                "enablePullDownRefresh": false
+            }  
         }
 	
 		//	老页面

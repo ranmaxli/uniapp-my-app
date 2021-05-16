@@ -23,13 +23,13 @@
 		<div class="usercolumn-two gdgn ">
 			<div class="conttitle">全部功能</div>
 			<ul class="mine-grid-ul">
-				<li>
+				<!-- <li>
 					<image src="../../static/member/wdgn_17.png" class="imgicon"></image>
 					<p>体重数据</p>
-				</li>
-				<li>
+				</li> -->
+				<li @click="toHealthPage">
 					<image src="../../static/member/wdgn_19.png" class="imgicon"></image>
-					<p>健身数据</p>
+					<p>健康数据</p>
 				</li>
 				<li @click="toCamera">
 					<image src="../../static/icon/camera.png" class="imgicon"></image>
@@ -75,6 +75,11 @@
 			}
 		},
 		methods: {
+			toHealthPage(){
+				uni.navigateTo({
+					url: '/pages/app-health/app-health'
+				})
+			},
 			toSettingsDetail(){
 				uni.navigateTo({
 					url: '/pages/settings-detail/settings-detail'
