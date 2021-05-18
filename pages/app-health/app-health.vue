@@ -13,13 +13,20 @@
 
 		<view>
 						 
-			<view v-show="currentTab==='echarts1'">
+			<view v-show="currentTab==='weight'">
 			  <view class="charts-box">
-				<qiun-data-charts type="line" :chartData="chartsDataLine1" :echartsH5="true" :echartsApp="true" :reshow="currentTab==='echarts1'"/>
+				<qiun-data-charts type="line"
+				:opts="{extra:{line:{type:'curve'}},
+					enableScroll:true,
+					xAxis:{scrollShow:true,itemCount:4,disableGrid:true}}" 
+				:chartData="chartsDataLine1" 
+				:ontouch="true"
+				:canvas2d="true"
+				:reshow="currentTab==='weight'"/>
 			  </view>
 			</view>
 			
-			<view v-show="currentTab==='echarts2'">
+			<view v-show="currentTab==='chest'">
 			   <view class="charts-box">
 				  <qiun-data-charts type="line"
 				  :opts="{extra:{line:{type:'curve'}},
@@ -28,11 +35,11 @@
 				  :chartData="chartsDataLine1" 
 				  :ontouch="true"
 				  :canvas2d="true"
-				  :reshow="currentTab==='echarts2'"/>
+				  :reshow="currentTab==='chest'"/>
 				</view>
 			</view> 
 			
-			<view v-show="currentTab==='echarts3'">
+			<view v-show="currentTab==='armCircumference'">
 			   <view class="charts-box">
 				  <qiun-data-charts type="line"
 				  :opts="{extra:{line:{type:'curve'}},
@@ -41,7 +48,7 @@
 				  :chartData="chartsDataLine1" 
 				  :ontouch="true"
 				  :canvas2d="true"
-				  :reshow="currentTab==='echarts3'"/>
+				  :reshow="currentTab==='armCircumference'"/>
 				</view>
 			</view> 
 		</view>
@@ -63,11 +70,10 @@
 		<br/><br/><br/>
 		
 		<view class="uni-form-item uni-column">
-			<input class="uni-input" maxlength="3" @input="onKeyInput" placeholder="请输入您当前的体重" />
+			<input class="uni-input" maxlength="3" @input="onKeyInput" placeholder="请输入您当前身体数据" />
 			<button type="default" @click="insertChatRow">添加</button>
 			<button type="default" @click="deleteChatRow">清空</button>
 			<button type="default" @click="deleteLastData">删除最近一次数据</button>
-			<button type="default" @click="dropTable">删除表</button>
 		</view>
 		
 		<!-- <view>
@@ -83,25 +89,27 @@
 	export default {
 		data() {
 			return {
+				cateCurrentIndex:0,
+				cateId:'1',
+				currentTab: 'weight',
+				currentTabName: '体重',
 				categories:[
 					{
 						id:1,
 						name:'体重',
-						value:"echarts1"
+						value:"weight"
 					},
 					{
 						id:2,
 						name:'胸围',
-						value:"echarts2"
+						value:"chest"
 					},
 					{
 						id:3,
 						name:'臂围',
-						value:"echarts3"
+						value:"armCircumference"
 					}
 				],
-				cateCurrentIndex:0,
-				cateId:'1',
 				dbName: 'person_data',
 				dbPath: '_doc/person_data.db',
 				dbTable: 'person_data',
@@ -118,26 +126,20 @@
 					}
 				],
 				chartsDataLine1: {},
-				exeSql:'',
-				exeData:'',
 				maxId:0,
 				allData:'',
-				menus:[{text:"体重",value:"echarts1"},{text:"胸围",value:"echarts2"},{text:"臂围",value:"echarts3"}],
-				currentTab: 'echarts1',
 			}
 		},
 		methods: {
 			createChatTable() {
 				let sql = 'CREATE TABLE if not exists ' + this.dbTable +
-					' ( "id" int(32) NOT NULL,"weight" float(32),"createTime" varchar(32), PRIMARY KEY ("id"));'
+					' ( "id" int(32) NOT NULL,"weight" float(32),"classify" varchar(32),"createTime" varchar(32), PRIMARY KEY ("id"));'
 				
 				let _this = this;
 				plus.sqlite.selectSql({
 					name: this.dbName,
 					sql: sql,
 					success: function(data) {
-						_this.exeSql = sql;
-						_this.exeData = data;
 						console.log("数据库创建成功！");
 					},
 					fail: function(e) {
@@ -186,15 +188,13 @@
 				
 				let num = Math.floor(Math.random()*(1 - 100) + 100);
 				let data = this.chatText
-				let sql = "insert into " + this.dbTable +  "(id, weight, createTime) values(" + newId + "," + num + ",'" + (new Date().getYear() + 1900) + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate() + "')";
+				let sql = "insert into " + this.dbTable +  "(id, weight, classify, createTime) values(" + newId + "," + num + ",'" + this.currentTab + "','" + (new Date().getYear() + 1900) + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate() + "')";
 				
 				let _this = this;
 				plus.sqlite.selectSql({
 					name: this.dbName,
 					sql: sql,
 					success: function(data) {
-						_this.exeSql = sql;
-						_this.exeData = data;
 						console.log("插入数据成功！");
 					},
 					fail: function(e) {
@@ -202,10 +202,7 @@
 					}
 				});
 				
-				this.selectSql();
-				setTimeout(() => {
-					this.getServerData();
-				}, 1000);
+				this.initCharts();
 			},
 			insertListChatRow() {
 				// 老方法尚未用到,尚未修改
@@ -217,39 +214,30 @@
 				}
 			},
 			deleteChatRow() {
-				let sql = "delete from " + this.dbTable;
+				let sql = "delete from " + this.dbTable + " where classify = '" + this.currentTab + "'";;
 				
 				let _this = this;
 				plus.sqlite.selectSql({
 					name: this.dbName,
 					sql: sql,
 					success: function(data) {
-						_this.exeSql = sql;
-						_this.exeData = data;
-						console.log("删除表成功！");
+						console.log("成功清空当前分类下的数据！");
 					},
 					fail: function(e) {
 						console.log('selectSql failed: ' + JSON.stringify(e));
 					}
 				});
 				
-				this.selectSql();
-				setTimeout(() => {
-					this.getServerData();
-				}, 1000);
+				this.initCharts();
 			},
 			selectSql() {
-				let curPage = 1
-				let pageSize = 100
-				let sql = 'select * from ' + this.dbTable + ' where 1=1' +
-					' limit ' + pageSize + ' offset ' + (curPage - 1) * pageSize;
+				let sql = "select * from " + this.dbTable + " where classify = '" + this.currentTab + "'";
 				
 				let _this = this;
 				plus.sqlite.selectSql({
 					name: this.dbName,
 					sql: sql,
 					success: function(data) {
-						_this.exeSql = sql;
 						_this.allData = data;
 						console.log("查询数据成功！");
 					},
@@ -257,10 +245,6 @@
 						console.log('selectSql failed: ' + JSON.stringify(e));
 					}
 				});
-				
-				setTimeout(() => {
-					this.getServerData();
-				}, 1000);
 				
 				let sql1 = "select max(id) from " + this.dbTable;
 				plus.sqlite.selectSql({
@@ -310,7 +294,7 @@
 					for(var i = 0; i < _this.allData.length; i++){
 						params1.push(_this.allData[i].weight);
 					}
-					seriesJsonObject['name'] = '体重';
+					seriesJsonObject['name'] = _this.currentTabName;
 					seriesJsonObject['data'] = params1;
 					seriesJsonArray.push(seriesJsonObject);
 			
@@ -325,58 +309,56 @@
 					this.chartsDataLine1 = resultJsonObject;
 				}else{
 					this.createChatTable();
-					this.chartsDataLine1= {"categories":["0"],"series":[{"name":"体重","data":[0]}]};
+					this.chartsDataLine1= {"categories":["0"],"series":[{"name":"0","data":[0]}]};
 				}
-				// console.log(this.chartsDataLine1);
 			},  
 			onKeyInput(event) {
 				this.chatText.weight = event.target.value;
 			},
 			deleteLastData(){
-				let sql = "delete from " + this.dbTable +" where id = " + this.maxId;
+				let sql = "delete from " + this.dbTable +" where id = " + this.allData[this.allData.length - 1].id;
 				
 				let _this = this;
 				plus.sqlite.selectSql({
 					name: this.dbName,
 					sql: sql,
 					success: function(data) {
-						_this.exeSql = sql;
-						_this.exeData = data;
-						console.log("成功删除最新数据！");
+						console.log("成功删除当前分类下的最新数据！");
 					},
 					fail: function(e) {
 						console.log('selectSql failed: ' + JSON.stringify(e));
 					}
 				});
 				
+				this.initCharts();
+			},
+			tabChange(e){
+				this.chartsDataLine1.series=[]
+				let index = e.currentTarget.dataset.index
+				this.cateCurrentIndex = index
+				this.cateId = e.currentTarget.dataset.cateId
+				this.getTabContent();
+				this.initCharts();
+			},
+			getTabContent(){
+				let myList = this.categories
+				for(let i = 0 ; i< myList.length; i++){
+					if(this.cateId == myList[i].id){
+						this.currentTab = myList[i].value
+						this.currentTabName = myList[i].name
+					}
+				}
+			},
+			initCharts(){
 				this.selectSql();
 				setTimeout(() => {
 					this.getServerData();
 				}, 1000);
-			},
-			tabChange(e){
-				let _this = this
-				let index = e.currentTarget.dataset.index
-				_this.cateCurrentIndex = index
-				_this.cateId = e.currentTarget.dataset.cateId
-				_this.getTabContent();
-			},
-			getTabContent(){
-				let _this = this
-				let myList = _this.categories
-				for(let i = 0 ; i< myList.length; i++){
-					if(_this.cateId == myList[i].id){
-						_this.currentTab = myList[i].value
-					}
-				}
-			},
+			}
 		},
 		onReady() {
 			this.openDatabase();
-			this.selectSql();
-			setTimeout(() => {
-				this.getServerData();
-			}, 1000);
+			this.initCharts();
 		},
 		onBackPress() {
 			this.closeDatabase();
