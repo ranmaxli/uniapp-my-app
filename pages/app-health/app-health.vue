@@ -1,34 +1,68 @@
 <template>
 	<view class="app-health">
 		
-		<view class="charts-box">
-
-			<qiun-data-charts type="line"
-			:opts="{extra:{line:{type:'curve'}},
-					enableScroll:true,
-					xAxis:{scrollShow:true,itemCount:4,disableGrid:true}}" 
-			:chartData="chartsDataLine1" 
-			:ontouch="true"
-			:canvas2d="true"/>
-			
-		</view>
-		
 		<view>
-			<!-- <button type="default" @click="isOpenDatabase">判断数据库是否打开</button> -->
-			<!-- <button type="default" @click="closeDatabase">关闭数据库</button> -->
-			<!-- <button type="default" @click="openDatabase">打开数据库</button> -->
-			<!-- <button type="default" @click="dropTable">删除表</button> -->
-			<!-- <button type="default" @click="createChatTable">创建表</button> -->
-			<!-- <button type="default" @click="transaction">执行事务</button> -->
-			<!-- <button type="default" @click="insertChatRow">新增数据</button> -->
-			<!-- <button type="default" @click="insertListChatRow">批量新增数据</button> -->
-			<!-- <button type="default" @click="selectSql">查询数据</button> -->
-			<!-- <button type="default" @click="deleteChatRow">删除所有数据</button> -->
+			<scroll-view scroll-x="true" class="myScroll">
+				<view v-for="(cate,index) in categories" :key="index" :data-cateId="cate.id" :data-index="index"
+					:class="[cateCurrentIndex == index ? 'cateSelected' : 'cateUnSle']" @tap="tabChange">
+					{{cate.name}}
+					<view :class="[cateCurrentIndex == index ? 'lineSelected' : '']"></view>
+				</view>
+			</scroll-view>
+		</view>
+
+		<view>
+						 
+			<view v-show="currentTab==='echarts1'">
+			  <view class="charts-box">
+				<qiun-data-charts type="line" :chartData="chartsDataLine1" :echartsH5="true" :echartsApp="true" :reshow="currentTab==='echarts1'"/>
+			  </view>
+			</view>
+			
+			<view v-show="currentTab==='echarts2'">
+			   <view class="charts-box">
+				  <qiun-data-charts type="line"
+				  :opts="{extra:{line:{type:'curve'}},
+						enableScroll:true,
+						xAxis:{scrollShow:true,itemCount:4,disableGrid:true}}" 
+				  :chartData="chartsDataLine1" 
+				  :ontouch="true"
+				  :canvas2d="true"
+				  :reshow="currentTab==='echarts2'"/>
+				</view>
+			</view> 
+			
+			<view v-show="currentTab==='echarts3'">
+			   <view class="charts-box">
+				  <qiun-data-charts type="line"
+				  :opts="{extra:{line:{type:'curve'}},
+						enableScroll:true,
+						xAxis:{scrollShow:true,itemCount:4,disableGrid:true}}" 
+				  :chartData="chartsDataLine1" 
+				  :ontouch="true"
+				  :canvas2d="true"
+				  :reshow="currentTab==='echarts3'"/>
+				</view>
+			</view> 
 		</view>
 		
+		<!-- <view>
+			<button type="default" @click="isOpenDatabase">判断数据库是否打开</button>
+			<button type="default" @click="closeDatabase">关闭数据库</button>
+			<button type="default" @click="openDatabase">打开数据库</button>
+			<button type="default" @click="dropTable">删除表</button>
+			<button type="default" @click="createChatTable">创建表</button>
+			<button type="default" @click="transaction">执行事务</button>
+			<button type="default" @click="insertChatRow">新增数据</button>
+			<button type="default" @click="insertListChatRow">批量新增数据</button>
+			<button type="default" @click="selectSql">查询数据</button>
+			<button type="default" @click="deleteChatRow">删除所有数据</button>
+		</view> -->
+		
+
 		<br/><br/><br/>
 		
-		 <view class="uni-form-item uni-column">
+		<view class="uni-form-item uni-column">
 			<input class="uni-input" maxlength="3" @input="onKeyInput" placeholder="请输入您当前的体重" />
 			<button type="default" @click="insertChatRow">添加</button>
 			<button type="default" @click="deleteChatRow">清空</button>
@@ -36,11 +70,11 @@
 			<button type="default" @click="dropTable">删除表</button>
 		</view>
 		
-		<view>
+		<!-- <view>
 			<text>
 				{{allData}}
 			</text>
-		</view>
+		</view> -->
 		
 	</view>
 </template>
@@ -49,6 +83,25 @@
 	export default {
 		data() {
 			return {
+				categories:[
+					{
+						id:1,
+						name:'体重',
+						value:"echarts1"
+					},
+					{
+						id:2,
+						name:'胸围',
+						value:"echarts2"
+					},
+					{
+						id:3,
+						name:'臂围',
+						value:"echarts3"
+					}
+				],
+				cateCurrentIndex:0,
+				cateId:'1',
 				dbName: 'person_data',
 				dbPath: '_doc/person_data.db',
 				dbTable: 'person_data',
@@ -69,6 +122,8 @@
 				exeData:'',
 				maxId:0,
 				allData:'',
+				menus:[{text:"体重",value:"echarts1"},{text:"胸围",value:"echarts2"},{text:"臂围",value:"echarts3"}],
+				currentTab: 'echarts1',
 			}
 		},
 		methods: {
@@ -298,7 +353,23 @@
 				setTimeout(() => {
 					this.getServerData();
 				}, 1000);
-			}
+			},
+			tabChange(e){
+				let _this = this
+				let index = e.currentTarget.dataset.index
+				_this.cateCurrentIndex = index
+				_this.cateId = e.currentTarget.dataset.cateId
+				_this.getTabContent();
+			},
+			getTabContent(){
+				let _this = this
+				let myList = _this.categories
+				for(let i = 0 ; i< myList.length; i++){
+					if(_this.cateId == myList[i].id){
+						_this.currentTab = myList[i].value
+					}
+				}
+			},
 		},
 		onReady() {
 			this.openDatabase();
@@ -320,4 +391,46 @@
   width: 100%;
   height:300px;
 }
+
+.myScroll{
+		height: 80upx;
+		background-color: #f9f9f9;
+		white-space: nowrap;
+	}
+
+	.cateSelected{
+		color: rgb(51,51,51);
+		display: inline-block;
+		margin: 18upx 8upx 0 8upx;
+		min-width: 100upx;
+		text-align: center;
+		font-size: 30upx;
+		font-weight: bold;
+	}
+
+	.cateUnSle{
+		color: rgb(51,51,51);
+		display: inline-block;
+		margin: 18upx 8upx 0 8upx;
+		min-width: 100upx;
+		text-align: center;
+		font-size: 30upx;
+		font-weight: 550upx;
+	}
+
+	.lineSelected{
+		width: 60upx;
+		height: 6upx;
+		background-color: #FFD944;
+		border-radius: 3upx;
+		margin: 10upx auto;
+	}
+
+	.tabCon{
+		position: absolute;
+		top: 115upx;
+		background-color: white;
+		width: 750upx;
+		height: 100%;
+	}
 </style>
