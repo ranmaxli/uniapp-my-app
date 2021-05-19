@@ -70,9 +70,9 @@
 		<br/><br/><br/>
 		
 		<view class="uni-form-item uni-column">
-			<input class="uni-input" maxlength="3" @input="onKeyInput" placeholder="请输入您当前身体数据" />
+			<input class="uni-input" maxlength="5" @input="onKeyInput" placeholder="请输入您当前身体数据" />
 			<button type="default" @click="insertChatRow">添加</button>
-			<button type="default" @click="deleteChatRow">清空</button>
+			<!-- <button type="default" @click="deleteChatRow">清空</button> -->
 			<button type="default" @click="deleteLastData">删除最近一次数据</button>
 		</view>
 		
@@ -115,7 +115,7 @@
 				dbTable: 'person_data',
 				dbIsOpen: false,
 				chatText: {
-					weight: 0,
+					value: 0,
 				},
 				chatText1: [
 					{
@@ -186,7 +186,8 @@
 				console.log("当前最大ID为： " + this.maxId);
 				console.log("即将插入的ID为： " + newId);
 				
-				let num = Math.floor(Math.random()*(1 - 100) + 100);
+				// let num = Math.floor(Math.random()*(1 - 100) + 100);
+				let num = this.chatText.value;
 				let data = this.chatText
 				let sql = "insert into " + this.dbTable +  "(id, weight, classify, createTime) values(" + newId + "," + num + ",'" + this.currentTab + "','" + (new Date().getYear() + 1900) + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate() + "')";
 				
@@ -313,7 +314,7 @@
 				}
 			},  
 			onKeyInput(event) {
-				this.chatText.weight = event.target.value;
+				this.chatText.value = event.target.value;
 			},
 			deleteLastData(){
 				let sql = "delete from " + this.dbTable +" where id = " + this.allData[this.allData.length - 1].id;
@@ -369,6 +370,11 @@
 
 
 <style>
+.uni-input{
+	border:1px solid #ffffff;
+	background-color:transparent;
+}
+
 .charts-box{
   width: 100%;
   height:300px;
