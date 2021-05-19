@@ -22,10 +22,13 @@
 			},
 			onLoad (options) {
 				if(options.url != null){
+					//普通webview页面跳转
 					this.webContent = options.url;
 				}else if(options.QRCode.indexOf('http') == -1){
+					//二维码纯文本
 					this.QRContent = options.QRCode;
 				}else{
+					//二维码网页
 					this.webContent = options.QRCode;
 				}
 				
@@ -48,7 +51,7 @@
 				console.log(this.currentWebview.children()[0].getURL())
 				// #ifndef H5
 				uni.setClipboardData({
-					data: this.currentWebview.children()[0].getURL(),
+					data: "https://vip.parwix.com:4433/player/?url=" + this.currentWebview.children()[0].getURL(),
 					success: () => {
 						uni.showToast({
 							title: '澶嶅埗鎴愬姛'

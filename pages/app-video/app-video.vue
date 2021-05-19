@@ -5,23 +5,23 @@
 			<ul class="mine-grid-ul">
 				<li @click="toFreeVideo1">
 					<image src="../../static/member/wdgn_4.png" class="imgicon"></image>
-					<p>动漫</p>
+					<p>动漫花园</p>
 				</li>
 				<li @click="toFreeVideo2">
 					<image src="../../static/member/wdgn_4.png" class="imgicon"></image>
-					<p>电影1</p>
+					<p>无极电影</p>
 				</li>
 				<li @click="toFreeVideo3">
 					<image src="../../static/member/wdgn_4.png" class="imgicon"></image>
-					<p>电影2</p>
+					<p>大师影视</p>
 				</li>
-				<li @click="toFreeVideo4">
+				<!-- <li @click="toFreeVideo4">
 					<image src="../../static/member/wdgn_4.png" class="imgicon"></image>
 					<p>解析</p>
-				</li>
+				</li> -->
 			</ul>
 			
-			<div class="conttitle">视频资源</div>
+			<div class="conttitle">优质视频</div>
 			<ul class="mine-grid-ul">
 				<li @click="toWebView1">
 					<image src="../../static/member/wdgn_7.png" class="imgicon"></image>
@@ -70,7 +70,7 @@
 			},
 			toFreeVideo4(){
 				uni.navigateTo({
-					url: this.pagesURL + 'https://www.eggvod.cn/jxjx.php?lrspm=271688611&zhm_jx='
+					url: this.pagesURL + 'https://vip.parwix.com:4433/player/?url='
 				})
 			},
 			toWebView1(){
