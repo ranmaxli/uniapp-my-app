@@ -47,16 +47,21 @@
 				// #endif
 			},
 			onNavigationBarButtonTap(e){
-				// console.log(JSON.stringify(e))
-				console.log(this.currentWebview.children()[0].getURL())
+				let videoURL = '';
+				if(this.webContent.indexOf('qq') != -1 || this.webContent.indexOf('iqiyi') != -1 || this.webContent.indexOf('youku') != -1 ){
+					videoURL = "https://vip.parwix.com:4433/player/?url=" + this.currentWebview.children()[0].getURL();
+				}else{
+					videoURL = this.currentWebview.children()[0].getURL();
+				}
+				
 				// #ifndef H5
 				uni.setClipboardData({
-					data: "https://vip.parwix.com:4433/player/?url=" + this.currentWebview.children()[0].getURL(),
+					data: videoURL,
 					success: () => {
 						uni.showToast({
 							title: '复制成功'
 						})
-					}
+					},
 				})
 				// #endif
 			},

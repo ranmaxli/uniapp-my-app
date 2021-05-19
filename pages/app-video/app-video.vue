@@ -35,10 +35,10 @@
 					<image src="../../static/member/wdgn_7.png" class="imgicon"></image>
 					<p>优酷</p>
 				</li>
-				<li @click="toWebView4">
+				<!-- <li @click="toWebView4">
 					<image src="../../static/member/wdgn_7.png" class="imgicon"></image>
 					<p>bilibili</p>
-				</li>
+				</li> -->
 			</ul>
 			
 		</div>
