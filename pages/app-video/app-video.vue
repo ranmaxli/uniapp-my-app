@@ -5,7 +5,7 @@
 			<ul class="mine-grid-ul">
 				<li @click="toFreeVideo1">
 					<image src="../../static/member/wdgn_4.png" class="imgicon"></image>
-					<p>动漫花园</p>
+					<p>樱花动漫</p>
 				</li>
 				<li @click="toFreeVideo2">
 					<image src="../../static/member/wdgn_4.png" class="imgicon"></image>
