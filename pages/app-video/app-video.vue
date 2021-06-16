@@ -15,10 +15,10 @@
 					<image src="../../static/member/wdgn_4.png" class="imgicon"></image>
 					<p>大师影视</p>
 				</li>
-				<!-- <li @click="toFreeVideo4">
+				<li @click="toFreeVideo4">
 					<image src="../../static/member/wdgn_4.png" class="imgicon"></image>
-					<p>解析</p>
-				</li> -->
+					<p>片库</p>
+				</li>
 			</ul>
 			
 			<div class="conttitle">优质视频</div>
@@ -70,7 +70,7 @@
 			},
 			toFreeVideo4(){
 				uni.navigateTo({
-					url: this.pagesURL + 'https://vip.parwix.com:4433/player/?url='
+					url: this.pagesURL + 'https://www.pianku.li/'
 				})
 			},
 			toWebView1(){

@@ -70,10 +70,16 @@
 		<br/><br/><br/>
 		
 		<view class="uni-form-item uni-column">
-			<input class="uni-input" maxlength="5" @input="onKeyInput" placeholder="请输入您当前身体数据" />
-			<button type="default" @click="insertChatRow">添加</button>
+			<view class="input-box">
+				<view class="input-item">
+					<view class="input-body">
+						<input class="input" maxlength="6" v-model="chatText.value" placeholder="请输入您当前身体数据" />
+					</view>
+				</view>
+			</view>
+			<button class="button" @click="insertChatRow">添加</button>
 			<!-- <button type="default" @click="deleteChatRow">清空</button> -->
-			<button type="default" @click="deleteLastData">删除最近一次数据</button>
+			<button class="button del-button" @click="deleteLastData">删除最近一次数据</button>
 		</view>
 		
 		<!-- <view>
@@ -115,7 +121,7 @@
 				dbTable: 'person_data',
 				dbIsOpen: false,
 				chatText: {
-					value: 0,
+					value: '',
 				},
 				chatText1: [
 					{
@@ -312,9 +318,6 @@
 					this.createChatTable();
 					this.chartsDataLine1= {"categories":["0"],"series":[{"name":"0","data":[0]}]};
 				}
-			},  
-			onKeyInput(event) {
-				this.chatText.value = event.target.value;
 			},
 			deleteLastData(){
 				let sql = "delete from " + this.dbTable +" where id = " + this.allData[this.allData.length - 1].id;
@@ -334,6 +337,7 @@
 				this.initCharts();
 			},
 			tabChange(e){
+				this.chatText.value = ''
 				this.chartsDataLine1.series=[]
 				let index = e.currentTarget.dataset.index
 				this.cateCurrentIndex = index
@@ -373,6 +377,11 @@
 .uni-input{
 	border:1px solid #ffffff;
 	background-color:transparent;
+}
+
+.del-button{
+	background: #F56C6C;
+	margin-top: 50rpx;
 }
 
 .charts-box{
