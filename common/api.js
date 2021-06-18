@@ -8,10 +8,10 @@ export const myRequest = (options)=>{
 			data: options.data || {},
 			success: (res)=>{
 				if(res.data.code !== 20200) {
-					return uni.showToast({
-						icon:'none',
-						title: '获取数据失败'
-					})
+					// return uni.showToast({
+					// 	icon:'none',
+					// 	title: '获取数据失败'
+					// })
 				}
 				resolve(res.data.data)
 			},
