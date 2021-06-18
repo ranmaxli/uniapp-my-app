@@ -22,19 +22,39 @@
 			},
 			onLoad (options) {
 				if(options.url != null){
-					//∆’Õ®webview“≥√ÊÃ¯◊™
+					//ÊôÆÈÄöwebviewÈ°µÈù¢Ë∑≥ËΩ¨
 					this.webContent = options.url;
 				}else if(options.QRCode.indexOf('http') == -1){
-					//∂˛Œ¨¬Î¥øŒƒ±æ
+					//‰∫åÁª¥Á†ÅÁ∫ØÊñáÊú¨
 					this.QRContent = options.QRCode;
 				}else{
-					//∂˛Œ¨¬ÎÕ¯“≥
+					//‰∫åÁª¥Á†ÅÁΩëÈ°µ
 					this.webContent = options.QRCode;
 				}
 				
 				// #ifdef APP-PLUS
 				this.currentWebview = this.$mp.page.$getAppWebview()
 				// #endif
+			},
+			onReady(){
+				this.currentWebview.children()[0].onloaded=function() {
+					setTimeout(()=>{
+						const videoURL=this.getURL()
+						const canClipboard = uni.getStorageSync('canClipboard');
+						const matchedUrl=videoURL.startsWith('https://dsys2021.com/vodplay/')||videoURL.startsWith('https://dsys.tv/vodplay/')
+						if(matchedUrl&&canClipboard){
+							uni.setClipboardData({
+								data: videoURL,
+								success: () => {
+									uni.showToast({
+										title: 'Â§çÂà∂ÊàêÂäü'
+									})
+								},
+							})
+						}
+						uni.setStorageSync('canClipboard', false);
+					},1000)
+				}
 			},
 			onShow(){
 				// #ifdef APP-PLUS
@@ -52,6 +72,11 @@
 					videoURL = "https://vip.parwix.com:4433/player/?url=" + this.currentWebview.children()[0].getURL();
 				}else{
 					videoURL = this.currentWebview.children()[0].getURL();
+					if(videoURL.startsWith('https://dsys2021.com')||videoURL.startsWith('https://dsys.tv')){
+						uni.setStorageSync('canClipboard', true);
+						this.currentWebview.children()[0].reload()
+						return
+					}
 				}
 				
 				// #ifndef H5
