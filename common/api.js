@@ -16,10 +16,10 @@ export const myRequest = (options)=>{
 				resolve(res.data.data)
 			},
 			fail: (err)=>{
-				uni.showToast({
-					icon:'none',
-					title: '请求接口失败'
-				})
+				// uni.showToast({
+				// 	icon:'none',
+				// 	title: '请求接口失败'
+				// })
 				reject(err)
 			}
 		})
